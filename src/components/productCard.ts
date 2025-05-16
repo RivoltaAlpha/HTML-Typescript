@@ -1,0 +1,30 @@
+import { CartService } from "../services/Cart";
+import type { Product } from "../types";
+
+export function createProductCard(product: Product, cart: CartService): HTMLElement {
+  const div = document.createElement("div");
+  div.className = "card";
+//   <img src="${product.image.desktop}" alt="${product.name}">
+
+  div.innerHTML = `
+      <picture>
+        <source media="(min-width: 1024px)" srcset="${product.image.desktop}">
+        <source media="(min-width: 768px)" srcset="${product.image.tablet}">
+        <img src="${product.image.mobile}" alt="${product.name}">
+    </picture>
+    <h3>${product.name}</h3>
+    <p>$${product.price.toFixed(2)}</p>
+    <button>Add to Cart</button>
+  `;
+
+  const button = div.querySelector("button")!;
+  button.addEventListener("click", () => {
+    cart.add({
+      ...product,
+      image: product.image.mobile 
+    });
+    document.dispatchEvent(new Event("cartUpdated"));
+  });
+
+  return div;
+}
