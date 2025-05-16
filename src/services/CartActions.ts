@@ -38,6 +38,9 @@ public initDataBase(): Promise<void> {
 
   // Crud operations
 async addToCart(product: Product): Promise<void> {
+    if (product.id === undefined || product.id === null) {
+    throw new Error("Product must have a valid id.");
+  }
   if (!this.db) {
     await this.initDataBase();
   }
@@ -112,6 +115,7 @@ async addToCart(product: Product): Promise<void> {
         const transaction = this.db!.transaction(this.storeName, "readwrite");
         const store = transaction.objectStore(this.storeName);
         const request = store.get(id);
+        
     
         return new Promise((resolve, reject) => {
         request.onsuccess = (event) => {

@@ -20,7 +20,17 @@ export function createProductCard(product: Product, cart: CartService): HTMLElem
 
   const button = div.querySelector("button")!;
     button.addEventListener("click", async () => {
-    await cart.addToCart(product);
+    await cart.addToCart(
+       { ... product,
+        quantity: 1,
+        price: product.price,
+        image: {
+            thumbnail: product.image.thumbnail,
+            mobile: product.image.mobile,
+            tablet: product.image.tablet,
+            desktop: product.image.desktop
+        }
+       } as Product);
     button.textContent = "Added to Cart";
     document.dispatchEvent(new Event("cartUpdated"));
     });
