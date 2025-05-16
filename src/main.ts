@@ -8,7 +8,7 @@ import type { Product } from './types';
 const cart = new CartService();
 
 async function init() {
-  const res = await fetch("data.json");
+  const res = await fetch("/data.json");
   const products: Product[] = await res.json();
 
   const productList = document.getElementById("product-list")!;
