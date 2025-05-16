@@ -1,24 +1,36 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+import { CartService } from "./services/CartActions";
+import { createProductCard } from "./components/productCard";
+import { renderCart } from "./components/Modal";
+import type { Product } from './types';
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const cart = new CartService();
+
+async function init() {
+  const res = await fetch("data.json");
+  const products: Product[] = await res.json();
+
+  const productList = document.getElementById("product-list")!;
+  products.forEach(product => {
+    const card = createProductCard(product, cart);
+    productList.appendChild(card);
+  });
+
+  renderCart(cart);
+
+  document.addEventListener("cartUpdated", () => renderCart(cart));
+
+  document.getElementById("confirm-order")?.addEventListener("click", () => {
+    alert("Order confirmed!");
+    cart.clearCart();
+    renderCart(cart);
+  });
+
+  document.getElementById("reset-order")?.addEventListener("click", () => {
+    cart.clearCart();
+    renderCart(cart);
+  });
+}
+
+init();
