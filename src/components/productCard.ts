@@ -1,4 +1,4 @@
-import { CartService } from "../services/Cart";
+import { CartService } from "../services/CartActions";
 import type { Product } from "../types";
 
 export function createProductCard(product: Product, cart: CartService): HTMLElement {
@@ -7,7 +7,7 @@ export function createProductCard(product: Product, cart: CartService): HTMLElem
 //   <img src="${product.image.desktop}" alt="${product.name}">
 
   div.innerHTML = `
-      <picture>
+    <picture>
         <source media="(min-width: 1024px)" srcset="${product.image.desktop}">
         <source media="(min-width: 768px)" srcset="${product.image.tablet}">
         <img src="${product.image.mobile}" alt="${product.name}">
@@ -19,13 +19,11 @@ export function createProductCard(product: Product, cart: CartService): HTMLElem
   `;
 
   const button = div.querySelector("button")!;
-  button.addEventListener("click", () => {
-    cart.add({
-      ...product,
-      image: product.image.mobile 
-    });
+    button.addEventListener("click", async () => {
+    await cart.addToCart(product);
+    button.textContent = "Added to Cart";
     document.dispatchEvent(new Event("cartUpdated"));
-  });
+    });
 
-  return div;
-}
+    return div;
+    }
