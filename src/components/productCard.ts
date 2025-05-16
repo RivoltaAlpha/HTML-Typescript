@@ -12,9 +12,10 @@ export function createProductCard(product: Product, cart: CartService): HTMLElem
         <source media="(min-width: 768px)" srcset="${product.image.tablet}">
         <img src="${product.image.mobile}" alt="${product.name}">
     </picture>
-    <h3>${product.name}</h3>
-    <p>$${product.price.toFixed(2)}</p>
     <button>Add to Cart</button>
+    <p>${product.category}<p/>
+    <h4>${product.name}</h4>
+    <p price >$${product.price.toFixed(2)}</p>
   `;
 
   const button = div.querySelector("button")!;
