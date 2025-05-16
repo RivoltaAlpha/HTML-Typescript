@@ -14,17 +14,19 @@ export async function renderCart(cart: CartService) {
   items.forEach(({ product, quantity }) => {
     const div = document.createElement("div");
     div.innerHTML = `
-    <div class="cart-stuff">
-    <div class="c-item">
-      <p>${product.name}</p>
-      <p>${quantity}X</p>
-      <p>$ ${product.price.toFixed(2)}</p>
-      </div>
-      <span>
-        <button class="decrease" data-id="${product.id}">-</button>
-        <button class="increase" data-id="${product.id}">+</button>
-        </span>
-    <button class="remove" data-id="${product.id}">x</button>
+      <div class="cart-stuff">
+      <p class="c-name">${product.name}</p>
+      <div class="c-item">
+          <span class="c-price">
+            <p>${quantity}X</p>
+            <p>$ ${product.price.toFixed(2)}</p>
+          </span>
+          <span>
+            <button class="decrease" data-id="${product.id}">-</button>
+            <button class="increase" data-id="${product.id}">+</button>
+            <button class="remove" data-id="${product.id}">x</button>
+          </span>
+        </div>
     </div>
     `;
     cartContainer.appendChild(div);

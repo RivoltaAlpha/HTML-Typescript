@@ -173,25 +173,33 @@ h1 {
 
 .c-item{
   display: flex;
+  justify-items: center;
+  align-items: center;
   gap: 20px;
   flex-direction: row;
 }
-.c-item p:nth-child(1){
+.c-name {
   font-size: 1.2rem;
   font-weight: bold;
   color: #0e0000;
 }
-.c-item p:nth-child(2){
+.c-item p:nth-child(1){
   font-size: 1rem;
-  color: #ff0909;
+  font-weight: bold;
+  color: #ff0505;
 }
-.c-item p:nth-child(3){
+.c-item p:nth-child(2){
   font-size: 1rem;
   color: #b34215;
 }
 .card-stuff{
   display: flex;
+  flex-direction: column;
+}
+.c-price{
+  display: flex;
   flex-direction: row;
+  gap: 10px;
 }
 
 
