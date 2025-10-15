@@ -3,6 +3,7 @@ import './style.css'
 import { CartService } from "./services/CartActions";
 import { createProductCard } from "./components/productCard";
 import { renderCart } from "./components/Modal";
+import { showOrderModal } from "./components/OrderModal";
 import type { Product } from './types';
 
 const cart = new CartService();
@@ -21,44 +22,24 @@ async function init() {
 
   document.addEventListener("cartUpdated", () => renderCart(cart));
 
-  document.getElementById("item-count")?.addEventListener("load-window", () => {
-    cart.getTotalItems().then(count => {
-      const itemCount = document.getElementById("item-count");
-      if (itemCount) {
-        itemCount.textContent = count.toString();
-      }
-    });
-  });
-
-  document.getElementById("confirm-order")?.addEventListener("click", () => {
-    alert("Order confirmed!");
-    // cart.storeCartHistory();
-    cart.clearCart();
-    renderCart(cart);
+  document.getElementById("confirm-order")?.addEventListener("click", async () => {
+    await showOrderModal(cart);
   });
 
   document.getElementById("reset-order")?.addEventListener("click", () => {
     cart.clearCart();
     renderCart(cart);
+    // Reset all product cards
+    document.querySelectorAll(".card").forEach(card => {
+      const addBtn = card.querySelector(".add-to-cart-btn") as HTMLElement;
+      const quantityControls = card.querySelector(".quantity-controls") as HTMLElement;
+      if (addBtn && quantityControls) {
+        addBtn.style.display = "flex";
+        quantityControls.style.display = "none";
+        card.classList.remove("in-cart");
+      }
+    });
   });
 }
-
-function updateItemCount() {
-  cart.getTotalItems().then(count => {
-    const itemCount = document.getElementById("item-count");
-    if (itemCount) {
-      itemCount.textContent = count.toString();
-    }
-  });
-}
-  document.addEventListener("DOMContentLoaded", updateItemCount);
-  window.addEventListener("load", () => {
-    const event = new Event("load-window");
-    document.getElementById("item-count")?.dispatchEvent(event);
-  }
-  );
-  document.addEventListener("cartUpdated", updateItemCount);
-  document.getElementById("item-count")?.addEventListener("load-window", updateItemCount);
-  document.getElementById("item-count")?.dispatchEvent(new Event("load-window"));
 
 init();

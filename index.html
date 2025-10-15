@@ -4,19 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dessert Cart</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./src/style.css">
 </head>
 <body>
-  <h1>Desserts </h1>
+  <h1>Desserts</h1>
   <div class="container">
     <div id="product-list" class="product-grid"></div>
     
     <section id="cart" class="cart-panel">
-      <h2>Your Cart(<span class="item-count" id="item-count">0</span>)</h2>
-      <div class="cart-items"></div>
-      <p id="cart-total" class="total">Total: $0.00</p>
-      <button id="confirm-order" class="btn primary">Confirm Order</button>
-      <button id="reset-order" class="btn secondary">Start New Order</button>
+      <h2>Your Cart (<span class="item-count" id="item-count">0</span>)</h2>
+      <div class="cart-items">
+        <div class="empty-cart">
+          <img src="./assets/images/illustration-empty-cart.svg" alt="Empty cart" id="empty-cart-img">
+          <p>Your added items will appear here</p>
+        </div>
+      </div>
+      <p id="cart-total" class="total">Order Total $0.00</p>
+      <button id="confirm-order" class="btn primary" style="display: none;">Confirm Order</button>
     </section>
   </div>
 

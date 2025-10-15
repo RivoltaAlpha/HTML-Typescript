@@ -1,6 +1,5 @@
 import type { Product } from "../types";
 
-
 export class CartService {
     private db: IDBDatabase | null = null;
     private readonly dbName = "cartDB";
